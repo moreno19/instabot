@@ -3,6 +3,8 @@
 Instagram promotion and SMM scripts.
 Forever free. Written in Python.
 
+DO NOT pip install custom module inside of the folder, will create redundancies
+pip install -e git+http://github.com/moreno19/instabot2.gi#egg=instabot2
 
 ultimate handles following users of users, still needs to randomize order of following accounts
 
