@@ -38,7 +38,7 @@ from .bot_photo import download_photo, download_photos, upload_photo
 from .bot_stats import save_user_stats
 from .bot_support import (check_if_file_exists, console_print, extract_urls,
                           read_list_from_file)
-from .bot_unfollow import (unfollow, unfollow_everyone, unfollow_non_followers,
+from .bot_unfollow import (unfollow, unfollow_everyone, unfollow_non_followers, unfollow_followers,
                            unfollow_users)
 from .bot_unlike import (unlike, unlike_comment, unlike_media_comments,
                          unlike_medias, unlike_user)

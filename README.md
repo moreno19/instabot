@@ -12,7 +12,7 @@ infinity_hashtags_liker runs 24/7, likes pics with hashtags
 
 infinity_hashtags_liker CAN run 24/7, follows people who post about certain hashtags
 
-unfollow_non_followers is self explanatory and should be used every few days, sparingly
+unfollow_followers is self explanatory and should be used every few days, sparingly
 
 
 ---
