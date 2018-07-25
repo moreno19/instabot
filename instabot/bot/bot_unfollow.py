@@ -51,6 +51,14 @@ def unfollow_non_followers(self, n_to_unfollows=None):
         self.unfollow(user_id)
     self.console_print(" ===> Unfollow non-followers done! <===", 'red')
 
+def unfollow_followers(self, n_to_unfollows=None):
+    self.logger.info("Unfollowing followers.")
+    self.console_print(" ===> Start unfollowing followers <===", 'red')
+    followers = list(set(self.followers) + self.friends_file.set)
+    for user_id in tqdm(followers[:n_to_unfollows]):
+        self.unfollow(user_id)
+    self.console_print(" ===> Unfollow followers done! - hope this doesn't backfire :) <===", 'red')
+
 
 def unfollow_everyone(self):
     self.unfollow_users(self.following)
