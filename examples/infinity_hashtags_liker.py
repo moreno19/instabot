@@ -30,4 +30,4 @@ like_hashtags_list = bot.read_list_from_file("like_hashtags.txt")
 while True:
     for hashtag in like_hashtags_list:
         bot.like_hashtag(hashtag)
-    time.sleep(wait)
+    time.sleep(3)

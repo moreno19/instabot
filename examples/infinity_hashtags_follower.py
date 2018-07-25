@@ -29,4 +29,4 @@ while True:
     for hashtag in like_hashtags_list:
         users = bot.get_hashtag_users(hashtag)
         bot.follow_users(users)
-    time.sleep(wait)
+    time.sleep(3)
