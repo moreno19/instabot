@@ -10,9 +10,12 @@ ultimate handles following users of users, still needs to randomize order of fol
 
 infinity_hashtags_liker runs 24/7, likes pics with hashtags
 
-infinity_hashtags_liker CAN run 24/7, follows people who post about certain hashtags
+infinity_hashtags_follower CAN run 24/7, follows people who post about certain hashtags
 
 unfollow_followers is self explanatory and should be used every few days, sparingly
+unfollow_everyone is for last resort nukes
+
+
 
 
 ---
