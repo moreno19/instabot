@@ -484,6 +484,9 @@ class Bot(object):
 
     def unfollow_non_followers(self, n_to_unfollows=None):
         return unfollow_non_followers(self, n_to_unfollows)
+    
+    def unfollow_followers(self, n_to_unfollows=None):
+        return unfollow_followers(self, n_to_unfollows)
 
     def unfollow_everyone(self):
         return unfollow_everyone(self)

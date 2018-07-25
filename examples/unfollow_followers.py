@@ -2,7 +2,7 @@
     instabot example
 
     Workflow:
-        1) unfollows users that don't follow you.
+        1) unfollows users that definitely follow you.
 """
 
 import argparse
@@ -22,4 +22,5 @@ args = parser.parse_args()
 bot = Bot()
 bot.login(username=args.u, password=args.p,
           proxy=args.proxy)
+
 bot.unfollow_followers()
