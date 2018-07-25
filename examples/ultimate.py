@@ -21,13 +21,8 @@ bot.login()
 print("Current script's schedule:")
 
 competitors_list = bot.read_list_from_file("follow_followers.txt")
-print("Going to follow followers of:", follow_followers_list)
+print("Going to follow followers of:", competitors_list)
 
-
-
-tasks_list = []
-for item in competitors_list:
-    tasks_list.append((bot.follow_followers, {'user_id': item, 'nfollows': None}))
 
 random_users_list = []
 for competitor in competitors_list:
