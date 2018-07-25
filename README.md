@@ -16,6 +16,9 @@ unfollow_followers is self explanatory and should be used every few days, sparin
 unfollow_everyone is for last resort nukes
 
 
+Instagram apparently limits api calls to 200 per hour. This implies two modes
+1. follow and like - 30 second latency
+2. unfollow only - 14 second latency
 
 
 ---

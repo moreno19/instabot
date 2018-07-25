@@ -83,11 +83,14 @@ def like_users(self, user_ids, nlikes=None, filtration=True):
         self.like_user(user_id, amount=nlikes, filtration=filtration)
 
 
-def like_hashtag(self, hashtag, amount=None):
+def like_hashtag(self, hashtags, amount=None):
     """ Likes last medias from hashtag """
-    self.logger.info("Going to like media with hashtag #%s." % hashtag)
-    medias = self.get_total_hashtag_medias(hashtag, amount)
-    return self.like_medias(medias)
+    #self.logger.info("Going to like media with hashtag #%s." % hashtag)
+    all_media = []
+    for hashtag in hashtags:
+        medias = self.get_total_hashtag_medias(hashtag, amount)
+        all_media += medias
+    return self.like_medias(all_media)
 
 
 def like_geotag(self, geotag, amount=None):

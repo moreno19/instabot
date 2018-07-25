@@ -27,7 +27,6 @@ bot.login(username=args.u, password=args.p,
 #get hashtags from text file instead of args
 like_hashtags_list = bot.read_list_from_file("like_hashtags.txt")
 
-while True:
-    for hashtag in like_hashtags_list:
-        bot.like_hashtag(hashtag)
-    time.sleep(3)
+
+bot.like_hashtag(like_hashtags_list)
+time.sleep(10)

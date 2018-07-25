@@ -20,17 +20,23 @@ bot.login()
 
 print("Current script's schedule:")
 
-follow_followers_list = bot.read_list_from_file("follow_followers.txt")
+competitors_list = bot.read_list_from_file("follow_followers.txt")
 print("Going to follow followers of:", follow_followers_list)
 
 
 
 tasks_list = []
-for item in follow_followers_list:
+for item in competitors_list:
     tasks_list.append((bot.follow_followers, {'user_id': item, 'nfollows': None}))
 
+random_users_list = []
+for competitor in competitors_list:
+    followers = bot.get_user_followers(competitor)
+    if not followers:
+        self.logger.info("{} not found / closed / has no followers.".format(user_id))
+    else:
 
+        #get 10% random selection from each user
+        random_users_list.append(shuffle(followers)[0:int(len(followers)*.1)])
 
-# shuffle(tasks_list)
-for func, arg in tasks_list:
-    func(**arg)
+bot.follow_users(random_users_list)
