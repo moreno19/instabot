@@ -24,10 +24,10 @@ bot = Bot()
 bot.login(username=args.u, password=args.p,
           proxy=args.proxy)
 
-wait = 5 * 60  # in seconds
+like_hashtags_list = bot.read_list_from_file("like_hashtags.txt")
 
 while True:
-    for hashtag in args.hashtags:
+    for hashtag in like_hashtags_list:
         users = bot.get_hashtag_users(hashtag)
         bot.follow_users(users)
     time.sleep(wait)

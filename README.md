@@ -3,6 +3,16 @@
 Instagram promotion and SMM scripts.
 Forever free. Written in Python.
 
+
+ultimate handles following users of users, still needs to randomize order of following accounts
+
+infinity_hashtags_liker runs 24/7, likes pics with hashtags
+
+infinity_hashtags_liker CAN run 24/7, follows people who post about certain hashtags
+
+unfollow_non_followers is self explanatory and should be used every few days, sparingly
+
+
 ---
 ### [Read the Docs](https://instagrambot.github.io/docs/) | [Contribute](https://github.com/instagrambot/docs/blob/master/CONTRIBUTING.md)
 ---
