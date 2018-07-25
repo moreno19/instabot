@@ -11,6 +11,7 @@
 
 import os
 import sys
+from random import shuffle
 
 sys.path.append(os.path.join(sys.path[0], '../../'))
 from instabot import Bot
@@ -32,6 +33,8 @@ for competitor in competitors_list:
     else:
 
         #get 10% random selection from each user
-        random_users_list.append(shuffle(followers)[0:int(len(followers)*.1)])
+        shuffle(followers)
+        sizee = len(followers) % 10
+        random_users_list.append(followers[:sizee])
 
 bot.follow_users(random_users_list)
