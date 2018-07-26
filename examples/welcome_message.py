@@ -16,7 +16,7 @@ from instabot import Bot, utils
 
 NOTIFIED_USERS_PATH = 'notified_users.txt'
 
-MESSAGE = "Hey, thanks for checking out our eco-friendly, super-stylish-stainless-steel straws! Our mission is to eliminate as much plastic as possible in order to preserve our oceans. Getting your own Boba Buddy is a simple way to eliminate up to 600 plastic straws. If you're ready to join the movement, click on one of our pictures, or check out our website at thebobabuddy.com - You'll make a difference! Have a beautiful day, and keep making smart choices for our planet. - The Boba Buddies <3"
+MESSAGE = "Hey, thanks for checking out our eco-friendly, super-stylish-stainless-steel straws! Our mission is to eliminate as much plastic as possible in order to preserve our oceans. Getting your own Boba Buddy is a simple way to eliminate up to 600 plastic straws. If you're ready to join the movement, click on one of our pictures, or check out our website at thebobabuddy.com - You'll make a difference! Have a beautiful day, and keep making smart choices for our planet <3"
 
 parser = argparse.ArgumentParser(add_help=True)
 parser.add_argument('-u', type=str, help="username")
