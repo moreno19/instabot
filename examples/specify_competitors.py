@@ -43,6 +43,8 @@ bot = Bot()
 bot.login(username=args.u, password=args.p,
           proxy=args.proxy)
 
+if not args.users: return
+
 competitors_list = [x for x in args.users]
 
 master_user_list = []
@@ -57,9 +59,9 @@ for username in competitors_list:
 
         likers = bot.get_media_likers(medias[0])
 
-        #at most, pick 400 users from each person
-        if len(likers) > 400:
-            likers = random_subset(likers, 400)
+        #at most, pick 400 users from each person if targeting 2 competitors -> 800per day/ 2 competitiors = 400 users each, etc
+        if len(likers) > :
+            likers = random_subset(likers, 800/len(args.users))
 
         master_user_list += likers
         print("likers for 1st pic of "+str(cnt)+"/"+str(numcomp)+"user added to masterlist of users\n\n")
