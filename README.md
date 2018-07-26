@@ -20,6 +20,12 @@ Instagram apparently limits api calls to 200 per hour. This implies two modes
 1. follow and like - 30 second latency
 2. unfollow only - 14 second latency
 
+DISREGARD ABOVE. 
+new gameplan is to like and follow using like_your_last_media_likers.py
+delete using unfollow_followers.py
+once a day message everyone using welcome_message.py
+
+add new targets to follow_followers.txt -> will target their fans
 
 ---
 ### [Read the Docs](https://instagrambot.github.io/docs/) | [Contribute](https://github.com/instagrambot/docs/blob/master/CONTRIBUTING.md)

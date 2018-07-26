@@ -83,7 +83,7 @@ class Bot(object):
                  comment_delay=60,
                  block_delay=30,
                  unblock_delay=30,
-                 message_delay=60,
+                 message_delay=10,
                  stop_words=('shop', 'store', 'free'),
                  verbosity=True,
                  device=None
