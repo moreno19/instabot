@@ -84,7 +84,8 @@ for username in competitors_list:
 for person in tqdm(random_subset(master_user_list, len(master_user_list))):
     bot.like_user(person, amount=2)
 
-    #only follow 20% of users, like all the rest
-    if random.randint(1,11) <= 2:
+    #only follow 30% of users, like all the rest
+    if random.randint(1,11) <= 3:
+        print("Attempting to follow this account")
         bot.follow(person)
 
