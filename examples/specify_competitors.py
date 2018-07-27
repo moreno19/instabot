@@ -46,18 +46,21 @@ bot.login(username=args.u, password=args.p,
 
 
 competitors_list = [x for x in args.users]
-
+likers = []
 master_user_list = []
 numcomp = len(competitors_list)
-cnt = 1
+cnt = 0
 for username in competitors_list:
-    print(str(cnt) +" out of "+str(numcomp)+"competitors, getting first picture\n")
     cnt+=1
+    print(str(cnt) +" out of "+str(numcomp)+"competitors, getting first picture\n")
+    
 
     medias = bot.get_user_medias(username, filtration=False)
-    if len(medias):
 
+    if len(medias):
+        
         likers = bot.get_media_likers(medias[0])
+
 
         #at most, pick 400 users from each person if targeting 2 competitors -> 800per day/ 2 competitiors = 400 users each, etc
         if len(likers) > 800/len(args.users):
@@ -68,10 +71,12 @@ for username in competitors_list:
     else:
         print("this account has no pics")
 
-for person in tqdm(random_subset(master_user_list, len(master_user_list))):
+people = random_subset(master_user_list, len(master_user_list))
+for person in tqdm(people):
     bot.like_user(person, amount=2)
 
     #only follow 20% of users, like all the rest
     if random.randint(1,11) <= 2:
+        print("attempting to follow someone I guess")
         bot.follow(person)
 
