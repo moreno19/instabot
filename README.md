@@ -1,19 +1,21 @@
 # Instabot
 
-Instagram promotion and SMM scripts.
-Forever free. Written in Python.
 
 DO NOT pip install custom module inside of the folder, will create redundancies
-pip install -e git+http://github.com/moreno19/instabot2.gi#egg=instabot2
+*pip install -e git+http://github.com/moreno19/instabot2.gi#egg=instabot2*
+run this at the same level as your overall directory, will create new /src folder, make sure your repo is up to date
+this is specifically for bot.____ files
 
-ultimate handles following users of users, still needs to randomize order of following accounts
+usually, just run target_competitiors.py -> this find the follow_followers.txt list, gets their latest post, and likes and follows a portion of those users
+-safe, might have to adjust like and follow latency
 
-infinity_hashtags_liker runs 24/7, likes pics with hashtags
+or, run specify_competitors.py -> same script as above, but use if you want to focus on 2 or 3 competitiors, input is through the command line
+- python specify_competitors.py -users berniesanders
 
-infinity_hashtags_follower CAN run 24/7, follows people who post about certain hashtags
+unfollow_non_followers.py is self explanatory
+unfollow_everyone takes into account whitelists, might work too
 
-unfollow_followers is self explanatory and should be used every few days, sparingly
-unfollow_everyone is for last resort nukes
+
 
 
 Instagram apparently limits api calls to 200 per hour. This implies two modes

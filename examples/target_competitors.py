@@ -42,7 +42,23 @@ bot = Bot()
 bot.login(username=args.u, password=args.p,
           proxy=args.proxy)
 
-competitors_list = bot.read_list_from_file("follow_followers.txt")
+options = ['general list of related competitors/pages', 'boba places in nyc']
+print("Choose target list:")
+for idx, element in enumerate(options):
+    print("{}) {}".format(idx+1,element))
+i = input("Enter number: ")
+try:
+    if 0 < int(i) <= len(options):
+            if int(i) is 1:
+                competitors_list = bot.read_list_from_file("follow_followers.txt")
+                print("using the general list")
+            elif int(i) is 2:
+               competitors_list = bot.read_list_from_file("bobanyc.txt")
+               print("using the boba nyc list")
+except:
+    competitors_list = bot.read_list_from_file("follow_followers.txt")
+    print("using the general list")
+
 
 master_user_list = []
 numcomp = len(competitors_list)
@@ -57,8 +73,8 @@ for username in competitors_list:
         likers = bot.get_media_likers(medias[0])
 
         #at most, pick 50 users from each person
-        if len(likers) > 50:
-            likers = random_subset(likers, 50)
+        if len(likers) > 800/len(competitors_list):
+            likers = random_subset(likers, 800/len(competitors_list))
 
         master_user_list += likers
         print("likers for 1st pic added to masterlist of users\n\n")
