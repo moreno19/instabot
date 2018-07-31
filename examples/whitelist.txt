@@ -23,6 +23,7 @@ oceanicpreservationsociety
 mission_blue
 byebyeplasticbags
 theplasticproject
+ubcbookstore
 zerowasteph
 blueplanetsociety
 saveourseasfoundation
@@ -55,4 +56,8 @@ happylemonca
 happylemonnyc
 tavalontea
 ohlonessc
+<<<<<<< Updated upstream
 juicepress
+=======
+hanlon_elaine
+>>>>>>> Stashed changes

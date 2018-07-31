@@ -76,7 +76,7 @@ for person in tqdm(people):
     bot.like_user(person, amount=2)
 
     #only follow 20% of users, like all the rest
-    if random.randint(1,11) <= 2:
+    if random.randint(1,11) <= 3:
         print("attempting to follow someone I guess")
         bot.follow(person)
 
