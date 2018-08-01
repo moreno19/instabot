@@ -13,10 +13,10 @@ from tqdm import tqdm
 
 sys.path.append(os.path.join(sys.path[0], '../'))
 from instabot import Bot, utils
+bot = Bot()
 
 NOTIFIED_USERS_PATH = 'notified_users.txt'
 
-MESSAGE = "Hey, thanks for checking out our eco-friendly, super-stylish-stainless-steel straws! Our mission is to eliminate as much plastic as possible in order to preserve our oceans. Getting your own Boba Buddy is a simple way to eliminate up to 600 plastic straws that are hurting marine wildlife. If you're ready to join the movement, click on one of our pictures, or check out our website at thebobabuddy.com - You'll make a difference! Have a beautiful day, and keep making smart choices for our planet <3"
 
 parser = argparse.ArgumentParser(add_help=True)
 parser.add_argument('-u', type=str, help="username")
@@ -26,7 +26,7 @@ parser.add_argument('-users', type=str, nargs='?', help='a path to already notif
 parser.add_argument('-message', type=str, nargs='?', help='message text')
 args = parser.parse_args()
 
-bot = Bot()
+
 bot.login(username=args.u, password=args.p,
           proxy=args.proxy)
 
@@ -65,5 +65,14 @@ print('Found new followers. Count: {count}'.format(
 ))
 
 for follower in tqdm(new_followers):
+    try:
+        name = str(bot.get_user_info(follower)["full_name"])
+        MESSAGE = "Hey "+name+"! Thanks for checking out our eco-friendly, super-stylish-stainless-steel straws! Our mission is to eliminate as much plastic as possible in order to preserve our oceans. Getting your own Boba Buddy is a simple way to eliminate up to 600 plastic straws that are hurting marine wildlife. If you're ready to join the movement, click on one of our pictures, or check out our website at thebobabuddy.com - You'll make a difference! Have a beautiful day, and keep making smart choices for our planet <3"
+    except:
+        MESSAGE = "Hey, thanks for checking out our eco-friendly, super-stylish-stainless-steel straws! Our mission is to eliminate as much plastic as possible in order to preserve our oceans. Getting your own Boba Buddy is a simple way to eliminate up to 600 plastic straws that are hurting marine wildlife. If you're ready to join the movement, click on one of our pictures, or check out our website at thebobabuddy.com - You'll make a difference! Have a beautiful day, and keep making smart choices for our planet <3"
+
+        
+    print(MESSAGE)
     if bot.send_message(MESSAGE, follower):
         notified_users.append(follower)
+
