@@ -42,6 +42,11 @@ bot = Bot()
 bot.login(username=args.u, password=args.p,
           proxy=args.proxy)
 
+
+
+'''
+select targeting option
+'''
 options = ['general list of related competitors/pages', 'boba places in nyc']
 print("Choose target list:")
 for idx, element in enumerate(options):
@@ -55,9 +60,48 @@ try:
             elif int(i) is 2:
                competitors_list = bot.read_list_from_file("bobanyc.txt")
                self.logger.info("using the boba nyc list")
+            elif int(i) is 3:
+                hotels_list = bot.read_list_from_file("hotels.txt")
+                ecoprod_list = bot.read_list_from_file("ecoprods.txt")
+                drink_list = bot.read_list_from_file("drinkplaces.txt")
+
+                self.logger.info("using the eco-hotel list")
 except:
     competitors_list = bot.read_list_from_file("follow_followers.txt")
     print("using the general list")
+
+'''
+for hotel people only
+-intersection of hotel followers who also follow ecoprod or drinkplace
+'''
+def target_hotel(self, hotels, ecoprod, drinks):
+    master = []
+    hotel_guests = []
+    for hotel in hotels:
+        hotel_guests += bot.get_user_followers(hotel)
+    print("found "+ len(hotel_guests) +" hotel guests\n")
+
+
+    for ecoprod in ecoprods:
+        temp = bot.get_user_followers(ecoprod)
+        for dude in temp:
+            if dude in set(hotel_guests):
+                master.append(dude)
+    print("found "+len(master)+" users who also follow an ecoprod page\n")
+
+
+    three_master
+    for drink in drinks:
+        temp += bot.get_user_followers(drinks)
+        for gal in temp:
+            if gal in set(master):
+                three_master.append(gal)
+    print("there are "+len(three_master)+ " people to target who fit into all three categories\n")
+
+
+
+
+
 
 
 master_user_list = []
