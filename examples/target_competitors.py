@@ -30,23 +30,11 @@ def random_subset( iterator, K ):
 
     return result
 
-
-
-parser = argparse.ArgumentParser(add_help=True)
-parser.add_argument('-u', type=str, help="username")
-parser.add_argument('-p', type=str, help="password")
-parser.add_argument('-proxy', type=str, help="proxy")
-args = parser.parse_args()
-
-bot = Bot()
-bot.login(username=args.u, password=args.p,
-          proxy=args.proxy)
-
-
-def concatenate(self, hotels, ecoprod, drinks):
+def intersectify(hotels, ecoprods, drinks):
     master = []
     hotel_guests = []
     three_master = []
+
     for hotel in hotels:
         hotel_guests += bot.get_user_followers(hotel)
     print("found "+ len(hotel_guests) +" hotel guests\n")
@@ -67,7 +55,23 @@ def concatenate(self, hotels, ecoprod, drinks):
                 three_master.append(gal)
     print("there are "+len(three_master)+ " people to target who fit into all three categories\n")
 
-    return three_master
+    if three_master:
+        return three_master
+    else:
+        return hotel_guests
+
+
+
+
+parser = argparse.ArgumentParser(add_help=True)
+parser.add_argument('-u', type=str, help="username")
+parser.add_argument('-p', type=str, help="password")
+parser.add_argument('-proxy', type=str, help="proxy")
+args = parser.parse_args()
+
+bot = Bot()
+bot.login(username=args.u, password=args.p,
+          proxy=args.proxy)
 
 
 '''
@@ -100,7 +104,7 @@ try:
                 ecoprod_list = bot.read_list_from_file("ecoprods.txt")
                 drink_list = bot.read_list_from_file("drinkplaces.txt")
 
-                master_user_list = concatenate(hotels_list, ecoprod_list, drink_list)
+                master_user_list = intersectify(hotels_list, ecoprod_list, drink_list)
                 master_user_list = random_subset(master_user_list, len(master_user_list))
                 
                 a = open('ecohotelpeople.txt', 'w')
