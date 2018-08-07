@@ -43,40 +43,10 @@ bot.login(username=args.u, password=args.p,
           proxy=args.proxy)
 
 
-
-'''
-select targeting option
-'''
-options = ['general list of related competitors/pages', 'boba places in nyc']
-print("Choose target list:")
-for idx, element in enumerate(options):
-    print("{}) {}".format(idx+1,element))
-i = input("Enter number: ")
-try:
-    if 0 < int(i) <= len(options):
-            if int(i) is 1:
-                competitors_list = bot.read_list_from_file("follow_followers.txt")
-                self.logger.info("using the general list")
-            elif int(i) is 2:
-               competitors_list = bot.read_list_from_file("bobanyc.txt")
-               self.logger.info("using the boba nyc list")
-            elif int(i) is 3:
-                hotels_list = bot.read_list_from_file("hotels.txt")
-                ecoprod_list = bot.read_list_from_file("ecoprods.txt")
-                drink_list = bot.read_list_from_file("drinkplaces.txt")
-
-                self.logger.info("using the eco-hotel list")
-except:
-    competitors_list = bot.read_list_from_file("follow_followers.txt")
-    print("using the general list")
-
-'''
-for hotel people only
--intersection of hotel followers who also follow ecoprod or drinkplace
-'''
-def target_hotel(self, hotels, ecoprod, drinks):
+def concatenate(self, hotels, ecoprod, drinks):
     master = []
     hotel_guests = []
+    three_master = []
     for hotel in hotels:
         hotel_guests += bot.get_user_followers(hotel)
     print("found "+ len(hotel_guests) +" hotel guests\n")
@@ -90,68 +60,143 @@ def target_hotel(self, hotels, ecoprod, drinks):
     print("found "+len(master)+" users who also follow an ecoprod page\n")
 
 
-    three_master
     for drink in drinks:
-        temp += bot.get_user_followers(drinks)
+        temp = bot.get_user_followers(drinks)
         for gal in temp:
             if gal in set(master):
                 three_master.append(gal)
     print("there are "+len(three_master)+ " people to target who fit into all three categories\n")
 
+    return three_master
+
+
+'''
+select targeting option
+'''
+options = ['general list of related competitors/pages', 'boba places in nyc', 'populate ecohotel people', 'run ecohotel']
+print("Choose target list:")
+for idx, element in enumerate(options):
+    print("{}) {}".format(idx+1,element))
+i = input("Enter number: ")
+
+try:
+    if 0 < int(i) <= len(options):
+            if int(i) is 1:
+                competitors_list = bot.read_list_from_file("follow_followers.txt")
+                self.logger.info("using the general list")
+                master_user_list = []
+                numcomp = len(competitors_list)
+                cnt = 1
+
+            elif int(i) is 2:
+               competitors_list = bot.read_list_from_file("bobanyc.txt")
+               self.logger.info("using the boba nyc list")
+               master_user_list = []
+               numcomp = len(competitors_list)
+               cnt = 1
+
+            elif int(i) is 3:
+                hotels_list = bot.read_list_from_file("hotels.txt")
+                ecoprod_list = bot.read_list_from_file("ecoprods.txt")
+                drink_list = bot.read_list_from_file("drinkplaces.txt")
+
+                master_user_list = concatenate(hotels_list, ecoprod_list, drink_list)
+                master_user_list = random_subset(master_user_list, len(master_user_list))
+                
+                a = open('ecohotelpeople.txt', 'w')
+                for person in tqdm(master_user_list):
+                    a.write("%s\n" % person)
+                a.close()
+                print("done writing\n")
+                print("run again to start following\n")
+
+            elif int(i) is 4:
+                a = open("ecohotelpeople.txt", 'r')
+                print("opening up the ecohotelpeople list")
+                master_user_list = bot.read_list_from_file("ecohotelpeople.txt")
+                for person in tqdm(master_user_list):
+                        
+                    #person is an ID
+                    bot.like_user(person, amount=2)
+
+                    #only follow 10k+ follow accounts or 30% of users, like all the rest
+                    if len(bot.get_user_followers(person)) > 5000 and len(bot.get_user_following(person)) < 5000:
+                        bot.follow(person)
+
+                        with open("whitelist.txt", "a") as f:
+                            user_info = bot.get_user_info(bot.get_username_from_user_id(person))
+                            print(user_info["username"])
+                            print(user_info["full_name"])
+
+                            f.write(str(bot.get_username_from_user_id(person)) + "\n")
+                            print("ADDED to Whitelist.\r")
+
+                        with open("influencers.txt", "a") as g:
+                            g.write(str(bot.get_username_from_user_id(person)) + "\n")
+                            print("Potential Influencer found.\r")
+
+                        
+
+                    elif random.randint(1,11) <= 3:
+                        print("Attempting to follow this account")
+                        bot.follow(person)
+
+except:
+    competitors_list = bot.read_list_from_file("follow_followers.txt")
+    print("using the general list - EXCEPT")
+    numcomp = len(competitors_list)
+    cnt = 1
+    i = 1
+    master_user_list = []
 
 
 
+if int(i) is 2 or int(i) is 1:
+    for username in competitors_list:
+        print(str(cnt) +" out of "+str(numcomp)+" competitors, getting first picture\n")
+        cnt+=1
 
+        medias = bot.get_user_medias(username, filtration=False)
+        if len(medias):
 
+            likers = bot.get_media_likers(medias[0])
 
-master_user_list = []
-numcomp = len(competitors_list)
-cnt = 1
-for username in competitors_list:
-    print(str(cnt) +" out of "+str(numcomp)+" competitors, getting first picture\n")
-    cnt+=1
+            #at most, pick 50 users from each person
+            if len(likers) > int(800/len(competitors_list)):
+                likers = random_subset(likers, int(800/len(competitors_list)))
 
-    medias = bot.get_user_medias(username, filtration=False)
-    if len(medias):
+            master_user_list += likers
+            print("likers for 1st pic added to masterlist of users\n\n")
+        else:
+            print("this account has no pics")
 
-        likers = bot.get_media_likers(medias[0])
+    master_user_list = random_subset(master_user_list, len(master_user_list)) #randomize order of list
 
-        #at most, pick 50 users from each person
-        if len(likers) > int(800/len(competitors_list)):
-            likers = random_subset(likers, int(800/len(competitors_list)))
+    for person in tqdm(master_user_list):
+        #person is an ID
+        bot.like_user(person, amount=2)
 
-        master_user_list += likers
-        print("likers for 1st pic added to masterlist of users\n\n")
-    else:
-        print("this account has no pics")
+        #only follow 10k+ follow accounts or 30% of users, like all the rest
+        if len(bot.get_user_followers(person)) > 5000 and len(bot.get_user_following(person)) < 5000:
+            bot.follow(person)
 
-master_user_list = random_subset(master_user_list, len(master_user_list)) #randomize order of list
+            with open("whitelist.txt", "a") as f:
+                user_info = bot.get_user_info(bot.get_username_from_user_id(person))
+                print(user_info["username"])
+                print(user_info["full_name"])
 
-for person in tqdm(master_user_list):
-    #person is an ID
-    bot.like_user(person, amount=2)
+                f.write(str(bot.get_username_from_user_id(person)) + "\n")
+                print("ADDED to Whitelist.\r")
 
-    #only follow 10k+ follow accounts or 30% of users, like all the rest
-    if len(bot.get_user_followers(person)) > 5000 and len(bot.get_user_following(person)) < 5000:
-        bot.follow(person)
+            with open("influencers.txt", "a") as g:
+                g.write(str(bot.get_username_from_user_id(person)) + "\n")
+                print("Potential Influencer found.\r")
 
-        with open("whitelist.txt", "a") as f:
-            user_info = bot.get_user_info(bot.get_username_from_user_id(person))
-            print(user_info["username"])
-            print(user_info["full_name"])
+            
 
-            f.write(str(bot.get_username_from_user_id(person)) + "\n")
-            print("ADDED to Whitelist.\r")
+        elif random.randint(1,11) <= 3:
+            print("Attempting to follow this account")
+            bot.follow(person)
 
-        with open("influencers.txt", "a") as g:
-            g.write(str(bot.get_username_from_user_id(person)) + "\n")
-            print("Potential Influencer found.\r")
-
-        
-
-    elif random.randint(1,11) <= 3:
-        print("Attempting to follow this account")
-        bot.follow(person)
-
-f.close()
-g.close()
+    f.close()
+    g.close()
