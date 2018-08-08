@@ -30,35 +30,12 @@ def random_subset( iterator, K ):
 
     return result
 
-def intersectify(hotels, ecoprods, drinks):
+def intersectify(competitors):
     master = []
-    hotel_guests = []
-    three_master = []
-
-    for hotel in hotels:
-        hotel_guests += bot.get_user_followers(hotel)
-    print("found "+ len(hotel_guests) +" hotel guests\n")
-
-
-    for ecoprod in ecoprods:
-        temp = bot.get_user_followers(ecoprod)
-        for dude in temp:
-            if dude in set(hotel_guests):
-                master.append(dude)
-    print("found "+len(master)+" users who also follow an ecoprod page\n")
-
-
-    for drink in drinks:
-        temp = bot.get_user_followers(drinks)
-        for gal in temp:
-            if gal in set(master):
-                three_master.append(gal)
-    print("there are "+len(three_master)+ " people to target who fit into all three categories\n")
-
-    if three_master:
-        return three_master
-    else:
-        return hotel_guests
+    for competitor in competitors:
+        master.append(set(bot.get_user_followers(competitor)))
+    combined = list(set.intersection(*master))
+    return combined
 
 
 
@@ -77,7 +54,7 @@ bot.login(username=args.u, password=args.p,
 '''
 select targeting option
 '''
-options = ['general list of related competitors/pages', 'boba places in nyc', 'populate ecohotel people', 'run ecohotel']
+options = ['general list of related competitors/pages', 'boba places in nyc', 'intersection']
 print("Choose target list:")
 for idx, element in enumerate(options):
     print("{}) {}".format(idx+1,element))
@@ -100,13 +77,13 @@ try:
                cnt = 1
 
             elif int(i) is 3:
-                hotels_list = bot.read_list_from_file("hotels.txt")
-                ecoprod_list = bot.read_list_from_file("ecoprods.txt")
-                drink_list = bot.read_list_from_file("drinkplaces.txt")
+                competitors_list = bot.read_list_from_file("intersections.txt")
 
-                master_user_list = intersectify(hotels_list, ecoprod_list, drink_list)
-                master_user_list = random_subset(master_user_list, len(master_user_list))
-                
+                try:
+                    maseter_user_list = intersectify(competitors_list)
+                except:
+                    print("fucked up")
+
                 a = open('ecohotelpeople.txt', 'w')
                 for person in tqdm(master_user_list):
                     a.write("%s\n" % person)
@@ -118,6 +95,8 @@ try:
                 a = open("ecohotelpeople.txt", 'r')
                 print("opening up the ecohotelpeople list")
                 master_user_list = bot.read_list_from_file("ecohotelpeople.txt")
+                
+
                 for person in tqdm(master_user_list):
                         
                     #person is an ID
@@ -138,8 +117,6 @@ try:
                         with open("influencers.txt", "a") as g:
                             g.write(str(bot.get_username_from_user_id(person)) + "\n")
                             print("Potential Influencer found.\r")
-
-                        
 
                     elif random.randint(1,11) <= 3:
                         print("Attempting to follow this account")
