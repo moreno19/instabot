@@ -2,7 +2,7 @@
 
 
 DO NOT pip install custom module inside of the folder, will create redundancies
-*pip install -e git+http://github.com/moreno19/instabot2.gi#egg=instabot2*
+*pip install -e git+http://github.com/moreno19/instabot2.git#egg=instabot2*
 run this at the same level as your overall directory, will create new /src folder, make sure your repo is up to date
 this is specifically for bot.____ files
 
