@@ -75,8 +75,24 @@ people = random_subset(master_user_list, len(master_user_list))
 for person in tqdm(people):
     bot.like_user(person, amount=2)
 
+    numfollowers = len(bot.get_user_followers(person))
+    if numfollowers > 20000:
+        bot.follow(person)
+
+	with open("whitelist.txt", "a") as f:
+               user_info = bot.get_user_info(bot.get_username_from_user_id(person))
+               print(user_info["username"])
+               print(user_info["full_name"])
+
+               f.write(str(bot.get_username_from_user_id(person)) + "\n")
+               print("ADDED to Whitelist.\r")
+
+	with open("influencers.txt", "a") as g:
+               g.write(str(bot.get_username_from_user_id(person))+" - " + str(numfollowers)+"\n")
+               print("Potential Influencer found.\r")
+
     #only follow 20% of users, like all the rest
     if random.randint(1,11) <= 3:
-        print("attempting to follow someone I guess")
+        print("attempting to follow this man")
         bot.follow(person)
 
