@@ -59,7 +59,7 @@ class Bot(object):
                  max_unlikes_per_day=1000,
                  max_follows_per_day=800,
                  max_unfollows_per_day=1000,
-                 max_comments_per_day=100,
+                 max_comments_per_day=400,
                  max_blocks_per_day=100,
                  max_unblocks_per_day=100,
                  max_likes_to_like=100,
