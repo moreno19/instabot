@@ -45,7 +45,7 @@ bot.login(username=args.u, password=args.p,
 '''
 select targeting option
 '''
-options = ['general list of related competitors/pages', 'boba places in nyc', 'intersection']
+options = ['general list of related competitors/pages', 'boba places in nyc']
 print("Choose target list:")
 for idx, element in enumerate(options):
     print("{}) {}".format(idx+1,element))
