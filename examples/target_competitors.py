@@ -30,15 +30,6 @@ def random_subset( iterator, K ):
 
     return result
 
-def intersectify(competitors):
-    master = []
-    for competitor in competitors:
-        master.append(set(bot.get_user_followers(competitor)))
-    combined = list(set.intersection(*master))
-    return combined
-
-
-
 
 parser = argparse.ArgumentParser(add_help=True)
 parser.add_argument('-u', type=str, help="username")
@@ -54,7 +45,7 @@ bot.login(username=args.u, password=args.p,
 '''
 select targeting option
 '''
-options = ['general list of related competitors/pages', 'boba places in nyc']
+options = ['general list of related competitors/pages', 'boba places in nyc', 'intersection']
 print("Choose target list:")
 for idx, element in enumerate(options):
     print("{}) {}".format(idx+1,element))
@@ -76,6 +67,7 @@ try:
                numcomp = len(competitors_list)
                cnt = 1
 
+            
 except:
     competitors_list = bot.read_list_from_file("follow_followers.txt")
     print("using the general list - EXCEPT")
@@ -112,8 +104,7 @@ if int(i) is 2 or int(i) is 1:
         bot.like_user(person, amount=2)
 
         #only follow 10k+ follow accounts or 30% of users, like all the rest
-	numfollowers = len(bot.get_user_followers(person))
-        if numfollowers > 20000:
+        if bot.get_user_info(person, use_cache=False)["follower_count"] > 20000:
             bot.follow(person)
 
             with open("whitelist.txt", "a") as f:
@@ -125,7 +116,7 @@ if int(i) is 2 or int(i) is 1:
                 print("ADDED to Whitelist.\r")
 
             with open("influencers.txt", "a") as g:
-                g.write(str(bot.get_username_from_user_id(person))+" - " + str(numfollowers)+"\n")
+                g.write(str(bot.get_username_from_user_id(person)) + "\n")
                 print("Potential Influencer found.\r")
 
             
