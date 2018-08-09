@@ -75,24 +75,27 @@ people = random_subset(master_user_list, len(master_user_list))
 for person in tqdm(people):
     bot.like_user(person, amount=2)
 
-    numfollowers = len(bot.get_user_followers(person))
-    if numfollowers > 20000:
+    #only follow 10k+ follow accounts or 30% of users, like all the rest
+    if bot.get_user_info(person, use_cache=False)["follower_count"] > 20000:
         bot.follow(person)
 
-	with open("whitelist.txt", "a") as f:
-               user_info = bot.get_user_info(bot.get_username_from_user_id(person))
-               print(user_info["username"])
-               print(user_info["full_name"])
+        with open("whitelist.txt", "a") as f:
+            user_info = bot.get_user_info(bot.get_username_from_user_id(person))
+            print(user_info["username"])
+            print(user_info["full_name"])
 
-               f.write(str(bot.get_username_from_user_id(person)) + "\n")
-               print("ADDED to Whitelist.\r")
+            f.write(str(bot.get_username_from_user_id(person)) + "\n")
+            print("ADDED to Whitelist.\r")
 
-	with open("influencers.txt", "a") as g:
-               g.write(str(bot.get_username_from_user_id(person))+" - " + str(numfollowers)+"\n")
-               print("Potential Influencer found.\r")
+        with open("influencers.txt", "a") as g:
+            g.write(str(bot.get_username_from_user_id(person)) + "\n")
+            print("Potential Influencer found.\r")
 
-    #only follow 20% of users, like all the rest
-    if random.randint(1,11) <= 3:
-        print("attempting to follow this man")
+        
+
+    elif random.randint(1,11) <= 3:
+        print("Attempting to follow this account")
         bot.follow(person)
 
+f.close()
+g.close()
