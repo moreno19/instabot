@@ -30,6 +30,13 @@ args = parser.parse_args()
 bot.login(username=args.u, password=args.p,
           proxy=args.proxy)
 
+<<<<<<< HEAD
+=======
+from datetime import datetime, timedelta
+# Use custom message from args if exist
+if args.message:
+    MESSAGE = args.message
+>>>>>>> f59151c27fa0a659e75d83ee6c37ae325fcd29c5
 
 while 1:
     print ('Starting a fresh hourly run\n')
