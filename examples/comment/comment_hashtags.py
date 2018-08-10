@@ -15,6 +15,7 @@ import os
 sys.path.append(os.path.join(sys.path[0], '../../'))
 from instabot import Bot
 
+
 if len(sys.argv) < 3:
     print("USAGE: Pass a path to the file with comments and an hastag to comment")
     print("Example: %s comments_emoji.txt dog cat" % sys.argv[0])
