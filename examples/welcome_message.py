@@ -30,6 +30,7 @@ args = parser.parse_args()
 bot.login(username=args.u, password=args.p,
           proxy=args.proxy)
 
+from datetime import datetime, timedelta
 # Use custom message from args if exist
 if args.message:
     MESSAGE = args.message
