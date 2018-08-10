@@ -8,7 +8,7 @@
 import argparse
 import os
 import sys
-
+from datetime import datetime, timedelta
 from tqdm import tqdm
 
 sys.path.append(os.path.join(sys.path[0], '../'))
@@ -30,13 +30,13 @@ args = parser.parse_args()
 bot.login(username=args.u, password=args.p,
           proxy=args.proxy)
 
-# Use custom message from args if exist
-if args.message:
-    MESSAGE = args.message
 
-# Check on existed file with notified users
-notified_users = utils.file(NOTIFIED_USERS_PATH)
-if not notified_users.list:
+while 1:
+    print ('Starting a fresh hourly run\n')
+
+    # Check on existed file with notified users
+    notified_users = utils.file(NOTIFIED_USERS_PATH)
+    if not notified_users.list:
     notified_users.save_list(bot.followers)
     print(
         'All followers saved in file {users_path}.\n'
@@ -46,25 +46,25 @@ if not notified_users.list:
     )
     exit(0)
 
-print('Read saved list of notified users. Count: {count}'.format(
+    print('Read saved list of notified users. Count: {count}'.format(
     count=len(notified_users)
-))
-all_followers = bot.followers
-print('Amount of all followers is {count}'.format(
+    ))
+    all_followers = bot.followers
+    print('Amount of all followers is {count}'.format(
     count=len(all_followers)
-))
+    ))
 
-new_followers = set(all_followers) - notified_users.set
+    new_followers = set(all_followers) - notified_users.set
 
-if not new_followers:
+    if not new_followers:
     print('New followers not found')
     exit()
 
-print('Found new followers. Count: {count}'.format(
+    print('Found new followers. Count: {count}'.format(
     count=len(new_followers)
-))
+    ))
 
-for follower in tqdm(new_followers):
+    for follower in tqdm(new_followers):
     try:
         name = str(bot.get_user_info(follower)["full_name"])
         if len(name.split(' ')) is 2:
@@ -79,4 +79,12 @@ for follower in tqdm(new_followers):
     print(MESSAGE)
     if bot.send_message(MESSAGE, follower):
         notified_users.append(follower)
+
+    #re-set the time
+    dt = datetime.now() + timedelta(hours:=1)
+    dt = dt.replace(minute=10)
+
+    #sleepytiem
+    while datetime.now() < dt:
+        time.sleep(1)
 
