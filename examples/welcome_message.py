@@ -88,7 +88,7 @@ while 1:
             if len(name.split(' ')) is 2:
                 name = name.split(' ')[0]
             
-
+	
             MESSAGE = "Hey "+name+"! Thanks for checking out our eco-friendly, reusable stainless-steel straws! Our mission is to eliminate as much plastic as possible in order to preserve our oceans. Getting your own Boba Buddy is a simple way to eliminate up to 600 plastic straws that hurt marine wildlife everyday. If you're ready to join the movement, click on one of our pictures, or check out our website at thebobabuddy.com - You'll make a difference! Have an awesome day, and keep making smart choices for our planet <3"
         except:
             MESSAGE = "Hey there, thanks for checking out our eco-friendly, stainless-steel straws! Our mission is to eliminate as much plastic as possible in order to preserve our oceans, one straw at a time. Getting your own Boba Buddy is a simple way to eliminate up to 600 plastic straws that hurt marine wildlife everyday. If you're ready to join the movement, click on one of our pictures, or check out our website at thebobabuddy.com - You'll make a difference! Have a beautiful day, and keep making smart choices for our planet <3"
