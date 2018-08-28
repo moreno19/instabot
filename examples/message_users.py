@@ -17,10 +17,10 @@ from tqdm import tqdm
 sys.path.append(os.path.join(sys.path[0], '../'))
 from instabot import Bot
 
-instaUsers = ["R1B4Z01D", "KoanMedia"]
-directMessage = "Thanks for the example."
+instaUsers = []
+directMessage = "Thanks for following our page - as a token of our appreciation, our stainless-steel straws are currently 30% off! If you haven't gotten yours yet, go to thebobabuddy.com to claim yours before the sale is over. Reusable straws are a practical and stylish way to reduce your plastic pollution footprint. Help save marine life and switch to a Boba Buddy today!"
 
-messagesToSend = 100
+messagesToSend = 1000
 banDelay = (86400 / messagesToSend)
 
 print("Which type of delivery method? (Type number)")
@@ -55,7 +55,17 @@ elif deliveryMethod == 2:
     exit()
 elif deliveryMethod == 3:
     for follower in tqdm(bot.followers):
+	try:
+	    name = str(bot.get_user_info(follower)["full_name"])
+	    if len(name.split(' ')) is 2:
+	    	name = name.split(' ')[0]
+	    directMessage = "Hey " + name + ', ' +  directMessage
+	except:
+	    directMessage = "Hey there! " + directMessage
+
         bot.send_message(directMessage, follower)
+    	directMessage = "Thanks for following our page - as a token of our appreciation, our stainless-steel straws are currently 30% off! If you haven't gotten yours yet, go to thebobabuddy.com to claim yours before the sale is over. Reusable straws are a practical and stylish way to reduce your plastic pollution footprint. Help save marine life and switch to a Boba Buddy today!"
+ 
     print('Sent An Individual Messages To Your Followers..')
     time.sleep(3)
     exit()
