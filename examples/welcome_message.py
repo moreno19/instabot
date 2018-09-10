@@ -95,6 +95,7 @@ while 1:
 
         
         print(MESSAGE)
+	time.sleep(2)
         if bot.send_message(MESSAGE, follower):
             notified_users.append(follower)
 
